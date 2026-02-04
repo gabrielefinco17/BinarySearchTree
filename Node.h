@@ -20,7 +20,7 @@ public:
     bool searchI(int k){
         Node *father = this;
         Node *current = this;
-        bool check {true};
+        bool check = true;
             do{
                 if(current==NULL){
                     cout << "Node not found!!" << endl;
@@ -48,7 +48,7 @@ public:
     }
     
     bool searchR(int num){
-        bool check {true};
+        bool check = true;
         do{
            if(this==NULL){
                cout << "node not found" << endl;
@@ -73,7 +73,7 @@ public:
     Node* insertI(int num){
         Node *current = this;
         Node *father = this;
-        bool check {true};
+        bool check = true;
         do{
             if(current==NULL){
                 if(num<father->data){
@@ -135,5 +135,23 @@ public:
         cout << this->data << " ";
         
         if(this->rchild != nullptr) this->rchild->inOrder();
+    }
+
+    void preOrder()
+    {
+        cout << this->data << " ";
+        
+        if(this->lchild != nullptr) this->lchild->inOrder();            
+        
+        if(this->rchild != nullptr) this->rchild->inOrder();
+    }
+    
+    void postOrder()
+    {   
+        if(this->lchild != nullptr) this->lchild->inOrder();            
+        
+        if(this->rchild != nullptr) this->rchild->inOrder();
+        
+        cout << this->data << " ";
     }
 };
