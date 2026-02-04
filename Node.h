@@ -24,12 +24,12 @@ public:
         bool check = true;
         do{
             if(current==NULL){
-                cout << "Node not found!!" << endl;
+                cout << "Node not found" << endl;
                 return false;
                 check = false;
             }
             if(current->data==k){
-                cout << "Node found!!" << endl;
+                cout << "Node found" << endl;
                 return true;
                 check = false;
             }
@@ -48,25 +48,23 @@ public:
 
     bool searchR(int num)
     {
-        bool check = true;
-        do{
-            if(this==NULL){
-                cout << "node not found" << endl;
+        if(this->data==num){
+            cout << "Node found" << endl;
+            return true;
+        }
+        if(num<this->data){
+            if(this->lchild == nullptr){
+                cout << "Node not found" << endl;
                 return false;
-                check = false;
             }
-            if(this->data==num){
-                cout << "node found" << endl;
-                return true;
-                check = false;
+            return this->lchild->searchR(num);
+        } else {
+            if(this->rchild == nullptr){
+                cout << "Node not found" << endl;
+                return false;
             }
-            if(num<this->data){
-                return this->lchild->searchR(num);
-            } else {
-                return this->rchild->searchR(num);
-            }
-        }while(check);
-        return true;
+            return this->rchild->searchR(num);
+        }
     }
 
     Node* insertI(int num)
@@ -140,14 +138,53 @@ public:
     void preOrder()
     {
         cout << this->data << " ";
-        if(this->lchild != nullptr) this->lchild->inOrder();
-        if(this->rchild != nullptr) this->rchild->inOrder();
+        if(this->lchild != nullptr) this->lchild->preOrder();
+        if(this->rchild != nullptr) this->rchild->preOrder();
     }
 
     void postOrder()
     {
-        if(this->lchild != nullptr) this->lchild->inOrder();
-        if(this->rchild != nullptr) this->rchild->inOrder();
+        if(this->lchild != nullptr) this->lchild->postOrder();
+        if(this->rchild != nullptr) this->rchild->postOrder();
         cout << this->data << " ";
     }
+    
+    void kthSmallestUtil(int& k, int& result, int& count)
+    {
+        if(this->lchild!=nullptr){
+            this->lchild->kthSmallestUtil(k, result, count);
+        }
+        count++;
+        if (count==k){
+            result=this->data;
+        }
+        if(this->rchild!=nullptr){
+            this->rchild->kthSmallestUtil(k, result, count);
+        }
+    }
+
+    int kthSmallest(int k)
+    {
+        int result = -1;
+        int count = 0;
+        this->kthSmallestUtil(k, result, count);
+        return result;
+    }
+	
+	int findDepth(int k)
+	{
+		Node* current = this;
+		int count = 0;
+		while (current!=NULL) {
+			if (k > current->data) {
+				current = current->rchild;
+			}else if (k < current->data){
+				current = current->lchild;
+			}else if (k == current->data){
+				return count;
+			}
+			count++;
+		}
+		return -1;
+	}
 };
